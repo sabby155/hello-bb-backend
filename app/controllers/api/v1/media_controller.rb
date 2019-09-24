@@ -2,7 +2,7 @@ class Api::V1::MediaController < ApplicationController
     
     def index 
         posts = Medium.all
-        render json: {posts: posts} 
+        render json: posts 
 
         # {user: UserSerializer.new(user), token: token }, status: :created
     end    
