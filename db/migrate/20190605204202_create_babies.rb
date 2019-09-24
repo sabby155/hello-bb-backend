@@ -5,7 +5,8 @@ class CreateBabies < ActiveRecord::Migration[5.2]
       t.string :first_name
       t.string :last_name
       t.string :birth_date
-      t.string :hospital_name
+      t.string :delivered_in
+      t.string :delivered_by
       t.string :weight
       t.string :height
       t.string :horoscope_sign

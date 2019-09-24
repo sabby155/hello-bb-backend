@@ -20,7 +20,8 @@ ActiveRecord::Schema.define(version: 2019_06_05_210803) do
     t.string "first_name"
     t.string "last_name"
     t.string "birth_date"
-    t.string "hospital_name"
+    t.string "delivered_in"
+    t.string "delivered_by"
     t.string "weight"
     t.string "height"
     t.string "horoscope_sign"
@@ -31,7 +32,37 @@ ActiveRecord::Schema.define(version: 2019_06_05_210803) do
     t.index ["user_id"], name: "index_babies_on_user_id"
   end
 
-  create_table "baby_first_faves", force: :cascade do |t|
+  create_table "baby_milestones", force: :cascade do |t|
+    t.string "date"
+    t.string "caption"
+    t.string "link"
+    t.bigint "baby_id"
+    t.bigint "milestone_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["baby_id"], name: "index_baby_milestones_on_baby_id"
+    t.index ["milestone_id"], name: "index_baby_milestones_on_milestone_id"
+  end
+
+  create_table "letters", force: :cascade do |t|
+    t.string "content"
+    t.bigint "baby_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["baby_id"], name: "index_letters_on_baby_id"
+  end
+
+  create_table "media", force: :cascade do |t|
+    t.string "link"
+    t.string "caption"
+    t.string "date"
+    t.bigint "baby_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["baby_id"], name: "index_media_on_baby_id"
+  end
+
+  create_table "milestones", force: :cascade do |t|
     t.string "first_smile"
     t.string "first_laugh"
     t.string "first_walk"
@@ -54,36 +85,6 @@ ActiveRecord::Schema.define(version: 2019_06_05_210803) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "baby_milestones", force: :cascade do |t|
-    t.string "date"
-    t.string "caption"
-    t.string "link"
-    t.bigint "baby_id"
-    t.bigint "baby_first_fave_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["baby_first_fave_id"], name: "index_baby_milestones_on_baby_first_fave_id"
-    t.index ["baby_id"], name: "index_baby_milestones_on_baby_id"
-  end
-
-  create_table "letters", force: :cascade do |t|
-    t.string "content"
-    t.bigint "baby_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["baby_id"], name: "index_letters_on_baby_id"
-  end
-
-  create_table "media", force: :cascade do |t|
-    t.string "link"
-    t.string "caption"
-    t.string "date"
-    t.bigint "baby_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["baby_id"], name: "index_media_on_baby_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -95,7 +96,7 @@ ActiveRecord::Schema.define(version: 2019_06_05_210803) do
 
   add_foreign_key "babies", "users"
   add_foreign_key "baby_milestones", "babies"
-  add_foreign_key "baby_milestones", "baby_first_faves", column: "baby_first_fave_id"
+  add_foreign_key "baby_milestones", "milestones"
   add_foreign_key "letters", "babies"
   add_foreign_key "media", "babies"
 end

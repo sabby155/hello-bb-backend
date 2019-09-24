@@ -1,6 +1,6 @@
-class CreateBabyFirstFaves < ActiveRecord::Migration[5.2]
+class CreateMilestones < ActiveRecord::Migration[5.2]
   def change
-    create_table :baby_first_faves do |t|
+    create_table :milestones do |t|
       t.string :first_smile
       t.string :first_laugh
       t.string :first_walk
